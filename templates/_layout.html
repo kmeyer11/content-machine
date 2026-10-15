@@ -12,11 +12,11 @@
   :root {
     --primary: {{ c.primary }};
     --on-primary: {{ c.on_primary }};
-    --accent: {{ c.accent }};
     --dark: {{ c.dark }};
     --light: {{ c.light }};
     --font-display: "{{ f.get('display', 'Arial Narrow') }}", "Arial Narrow", sans-serif;
     --font-body: "{{ f.get('body', 'Helvetica Neue') }}", "Helvetica Neue", Arial, sans-serif;
+    --footer-h: 132px;
   }
 </style>
 {% block head %}{% endblock %}
@@ -24,12 +24,12 @@
 <body>
 <main class="canvas {% block canvas_class %}{% endblock %}">
   {%- set bg = asset(post.get('background')) %}
-  <div class="bg">{% if bg %}<img src="{{ bg }}" style="object-position: {{ post.get('background_position') or 'center top' }}">{% endif %}</div>
-  <div class="shade"></div>
+  <div class="bg {{ 'photo' if bg else 'empty' }}">{% if bg %}<img src="{{ bg }}" style="object-position: {{ post.get('background_position') or 'center top' }}">{% endif %}</div>
   {% block content %}{% endblock %}
-  <footer class="brand">
-    <span>{% block footer %}{% endblock %}</span>
-    <span class="handle">{{ club.handle }}</span>
+  <footer class="footer">
+    {%- set badge = asset(club.get('badge')) %}
+    <span class="handle">{% if badge %}<img class="badge" src="{{ badge }}">{% endif %}{{ club.handle }}</span>
+    <span class="meta">{% block footer %}{% endblock %}</span>
   </footer>
 </main>
 <script>

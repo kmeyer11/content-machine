@@ -14,17 +14,17 @@ api:
 colors:
   primary: "#FDE100"
   on_primary: "#000000"   # text on top of primary
-  accent: "#FDE100"       # also the match graphic's belt border, so yellow keeps the belt one solid stripe
-  dark: "#0A0A0A"
+  dark: "#000000"
   light: "#FFFFFF"
 
 fonts:
-  url: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Inter:wght@400;600;700&display=swap"
-  display: Barlow Condensed
-  body: Inter
+  # Big Shoulders: condensed with an industrial feel (Ruhrgebiet), heavy enough for 290 px scores.
+  url: "https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Archivo:wght@400;600;800&display=swap"
+  display: Big Shoulders Display
+  body: Archivo
 
 logo: media/crests/fd-4.png   # our crest on the scoreboard (`crests --competition BL1`)
-# badge: media/crests/bvb-immer-weiter.png   # account logo, the buckle on the match graphic's top stripe (optional, none yet)
+badge: media/bvb/bvb-pfp.png   # account logo, next to the handle in every footer (gitignored)
 
 # API spelling -> ours. football-data.org uses short names ("M'gladbach").
 # Add a line whenever a graphic shows the wrong name.

@@ -1,37 +1,44 @@
 {% extends "_layout.html" %}
 {% block head %}
 <style>
+  /* Shirt number drawn as an outline behind the name, cut off by the wall's right edge. */
   .number {
-    position: absolute; right: 56px; top: 90px; font: 700 420px/1 var(--font-display);
-    color: transparent; -webkit-text-stroke: 4px var(--accent); opacity: .55;
+    position: absolute; right: -30px; bottom: -40px; z-index: 0;
+    font: 900 520px/.8 var(--font-display); color: transparent;
+    -webkit-text-stroke: 5px var(--on-primary); opacity: .9;
   }
-  .first { font: 600 56px/1 var(--font-display); text-transform: uppercase; letter-spacing: .06em; }
-  .last { font-size: 190px; white-space: nowrap; overflow: hidden; margin-top: 6px; }
-  .facts { display: flex; gap: 56px; margin-top: 36px; align-items: flex-start; }
-  .fact .label { font: 600 20px/1 var(--font-body); letter-spacing: .16em; text-transform: uppercase; opacity: .7; margin-bottom: 12px; }
-  .fact .value { font: 700 40px/1 var(--font-display); text-transform: uppercase; height: 52px; display: flex; align-items: center; gap: 14px; }
-  .fact img { height: 52px; width: 52px; object-fit: contain; }
+  .wall { overflow: hidden; padding-top: 0; }
+  .wall .inner { position: relative; z-index: 1; padding-top: 84px; }
+  /* The wall clips overflow, so the chip sits inside it instead of on the edge. */
+  .wall .chip { top: 0; transform: none; }
+  .first { font: 800 52px/1 var(--font-body); }
+  .last { font-size: 220px; white-space: nowrap; overflow: hidden; margin-top: 8px; max-width: 760px; }
+  .facts { display: flex; gap: 52px; margin-top: 40px; align-items: flex-start; }
+  .fact .label { font: 600 24px/1 var(--font-body); margin-bottom: 10px; }
+  .fact .value { font: 900 48px/1 var(--font-display); text-transform: uppercase; height: 56px; display: flex; align-items: center; gap: 14px; }
+  .fact img { height: 56px; width: 56px; object-fit: contain; }
 </style>
 {% endblock %}
 {% block content %}
 {%- set parts = post.player.rsplit(' ', 1) -%}
-{% if post.get('number') %}<div class="number">{{ post.number }}</div>{% endif %}
-<div class="layer">
-  <div class="spacer"></div>
-  <div class="kicker">{{ s['transfer_' ~ post.kind] }}</div>
-  {% if parts | length > 1 %}<div class="first">{{ parts[0] }}</div>{% endif %}
-  <div class="last display fit">{{ parts[-1] }}</div>
-  <div class="facts">
-    {% if post.kind != 'extension' and post.get('other_club') %}
-    <div class="fact">
-      <div class="label">{{ s['from'] if post.kind in ['in', 'loan_in'] else s['to'] }}</div>
-      <div class="value">{% set crest = asset(post.get('other_crest')) %}{% if crest %}<img src="{{ crest }}">{% endif %}{{ post.other_club }}</div>
+<div class="wall">
+  {% if post.get('number') %}<div class="number">{{ post.number }}</div>{% endif %}
+  <div class="chip">{{ s['transfer_' ~ post.kind] }}</div>
+  <div class="inner">
+    {% if parts | length > 1 %}<div class="first">{{ parts[0] }}</div>{% endif %}
+    <div class="last display fit">{{ parts[-1] }}</div>
+    <div class="facts">
+      {% if post.kind != 'extension' and post.get('other_club') %}
+      <div class="fact">
+        <div class="label">{{ s['from'] if post.kind in ['in', 'loan_in'] else s['to'] }}</div>
+        <div class="value">{% set crest = asset(post.get('other_crest')) %}{% if crest %}<img src="{{ crest }}">{% endif %}{{ post.other_club }}</div>
+      </div>
+      {% endif %}
+      {% if post.get('position') %}<div class="fact"><div class="label">{{ s.position }}</div><div class="value">{{ post.position }}</div></div>{% endif %}
+      {% if post.get('contract_until') %}<div class="fact"><div class="label">{{ s.contract_until }}</div><div class="value">{{ post.contract_until }}</div></div>{% endif %}
+      {% if post.get('fee') %}<div class="fact"><div class="label">{{ s.fee }}</div><div class="value">{{ post.fee }}</div></div>{% endif %}
     </div>
-    {% endif %}
-    {% if post.get('position') %}<div class="fact"><div class="label">{{ s.position }}</div><div class="value">{{ post.position }}</div></div>{% endif %}
-    {% if post.get('contract_until') %}<div class="fact"><div class="label">{{ s.contract_until }}</div><div class="value">{{ post.contract_until }}</div></div>{% endif %}
-    {% if post.get('fee') %}<div class="fact"><div class="label">{{ s.fee }}</div><div class="value">{{ post.fee }}</div></div>{% endif %}
   </div>
 </div>
 {% endblock %}
-{% block footer %}{{ post.date | longdate }}{% endblock %}
+{% block footer %}<b>{{ post.date | longdate }}</b>{% endblock %}

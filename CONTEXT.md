@@ -4,16 +4,18 @@ Makes Instagram post graphics for one account, Borussia Dortmund (German, `@bvb.
 
 Built so far: match result (from API-Football), breaking news, club statement, transfer, injury update. All are rendered as 1080×1350 PNGs (Instagram 4:5) from HTML/CSS with headless Chromium.
 
+Look (since 2026-10-15, in `templates/_base.css`): the Yellow Wall. Every photo is turned into a black/yellow duotone, like the account logo. The main text sits in black on a solid yellow block rising from the bottom. Statement and injury use a black canvas instead, because they are serious. Without a photo, the top shows a fading halftone of yellow dots. Type is Big Shoulders Display (scores, names, headlines) and Archivo (body). Scores use a colon (`3:2`), as German does. A black footer holds the account logo, handle and date.
+
 ## Inputs
 
-- `clubs/{club}.yaml`: name, language, handle, API team id, colours, fonts, logo, and an optional `badge` (the account logo, shown as the buckle on the match graphic's top stripe in the primary colour). It also holds `team_names` / `competition_names` / `round_names` (API spelling → how the account writes it), `competition_logos` (shown competition name → logo path) and `strings` (every word a template prints, in the club's language). If a template needs a new word, add it to `strings`, because missing keys fail the render.
+- `clubs/{club}.yaml`: name, language, handle, API team id, colours, fonts, logo, and an optional `badge` (the account logo, shown round next to the handle in every footer; `media/bvb/bvb-pfp.png`, gitignored). It also holds `team_names` / `competition_names` / `round_names` (API spelling → how the account writes it), `competition_logos` (shown competition name → logo path) and `strings` (every word a template prints, in the club's language). If a template needs a new word, add it to `strings`, because missing keys fail the render.
 - `media/{club}/players.yaml`: slug → name, number, aliases, display name. The slug is also the photo folder name.
 - `media/{club}/players/{slug}.jpg`, or several in `players/{slug}/` (one picked at random): player photos. Use portrait crops at least 1080 px wide with the face in the upper third, since the bottom half sits under the scoreboard and text.
-- `media/{club}/default-bg.{jpg,png}`: optional fallback background. Without one, posts use a gradient in the club colours.
+- `media/{club}/default-bg.{jpg,png}`: optional fallback background. Without one, posts use the yellow halftone.
 - `media/{club}/credits.yaml`: photographer + licence per photo (path → `credit` line). When a post uses a CC BY / CC BY-SA photo, its `credit` goes in the caption.
 - `media/{club}/loss/`, `serious/`, `victory/`: mood photo pools (optional, any club). See **Backgrounds** below.
-- `media/crests/`: crests cached from the API as `{team_id}.png` (API-Football) or `fd-{id}.png` (football-data.org); the extension follows the download URL, so SVG crests stay `.svg`. All 18 Bundesliga crests come from `crests --competition BL1` (rerun each new season, since promoted clubs change). Our own crest is the club yaml's `logo`, which wins over the API crest. The footer shows only the handle, with no logo: account logos tested 2026-10-01 were unreadable at footer size.
-- `media/competitions/`: competition logos, named in the club yaml's `competition_logos`. The match graphic shows them on a white badge in the top line, because most of them are dark on white. Downloaded once with curl: Bundesliga `https://crests.football-data.org/BL1.png`, Champions League `…/CL.png`, DFB-Pokal / Europa League / Conference League `https://media.api-sports.io/football/leagues/{81,3,848}.png` (plain downloads, no key). A competition without a logo shows text only.
+- `media/crests/`: crests cached from the API as `{team_id}.png` (API-Football) or `fd-{id}.png` (football-data.org); the extension follows the download URL, so SVG crests stay `.svg`. All 18 Bundesliga crests come from `crests --competition BL1` (rerun each new season, since promoted clubs change). Our own crest is the club yaml's `logo`, which wins over the API crest.
+- `media/competitions/`: competition logos, named in the club yaml's `competition_logos`. The match graphic shows them on a white square in its top-left label, because most of them are dark on white. Downloaded once with curl: Bundesliga `https://crests.football-data.org/BL1.png`, Champions League `…/CL.png`, DFB-Pokal / Europa League / Conference League `https://media.api-sports.io/football/leagues/{81,3,848}.png` (plain downloads, no key). A competition without a logo shows text only.
 - `.env`: `API_FOOTBALL_KEY` and `FOOTBALL_DATA_KEY` (see `.env.example`).
 - Reference (every task): `CLAUDE.md` (code and writing conventions)
 
@@ -62,7 +64,7 @@ All commands run from this folder with `.venv/bin/python -m content_machine.cli 
 - Match result, **win**: photo of whoever scored most for us. A tie is decided at random, and scorers without a photo are skipped. If no scorer has a photo, a random photo from `victory/`.
 - Match result, **draw**: nothing is picked. **Ask the user which photo to use** (at the step 3 checkpoint), then write it to `background:` by hand. `background` never overwrites a draw's line, and `match` stops before rendering a draw.
 - **breaking-news, statement**: random photo from `serious/`. Transfer and injury stay `null`, because their photo should be the player in question.
-- Nothing found: `default-bg`, else the club gradient.
+- Nothing found: `default-bg`, else the yellow halftone.
 
 `match` and `new` pick automatically. A match post filled in by hand needs `background posts/…/post.yaml` after the score and goals are in. Rerun it to get a different random pick.
 

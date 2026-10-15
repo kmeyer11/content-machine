@@ -115,7 +115,7 @@ def pick_background(post: Dict[str, Any]) -> Optional[str]:
     one from victory/ if no scorer has a photo). A draw returns None: the
     user picks that photo by hand.
     Serious announcements take a random photo from serious/. Falls back to the
-    club default, else None (the template's club-colour gradient). Other
+    club default, else None (the template's yellow halftone). Other
     announcements return None: their photo is about a specific player."""
     club_slug = post["club"]
     if post["type"] == "match-result":

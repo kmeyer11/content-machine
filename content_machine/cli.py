@@ -221,7 +221,7 @@ def cmd_background(args) -> None:
         path = Path(p).resolve()
         bg = _set_background(path)
         if not _is_draw(load_yaml(path)):
-            print(bg or "null (no photo found, the template uses the club gradient)")
+            print(bg or "null (no photo found, the template uses the yellow halftone)")
 
 
 def cmd_render(args) -> None:
