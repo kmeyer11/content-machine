@@ -1,0 +1,11 @@
+type: statement
+club: bvb
+date: "2026-10-01"
+title: null          # default: the club's "statement" string
+body: |
+  Borussia Dortmund distanziert sich entschieden von den Vorfällen nach dem Spiel am Sonntag.
+
+  Der Verein arbeitet mit der Polizei zusammen und wird gegen die Beteiligten Stadionverbote aussprechen.
+signed: Geschäftsführung, Borussia Dortmund
+background: null
+background_position: center

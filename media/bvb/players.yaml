@@ -1,0 +1,68 @@
+# slug -> who it is. Photo: players/{slug}.jpg, or several in players/{slug}/
+# (one picked at random). Portrait crops, at least 1080 px wide.
+# aliases: how the API writes the name, if initial + surname doesn't already match.
+# display: name shown on graphics (default: name).
+#
+# beispiel-spieler:
+#   name: Beispiel Spieler
+#   number: 10
+#   aliases: ["B. Spieler"]
+#   display: Spieler
+
+# Starting XI vs Werder Bremen, 2026-10-09 (ligainsider.de); numbers from
+# the squad lists on Wikipedia and fussballtransfers.com. Photos go in players/{slug}/.
+
+g-kobel:
+  name: Gregor Kobel
+  number: 1
+  display: Kobel
+
+w-anton:
+  name: Waldemar Anton
+  number: 3
+  display: Anton
+
+n-schlotterbeck:
+  name: Nico Schlotterbeck
+  number: 4
+  display: Schlotterbeck
+
+j-bellingham:
+  name: Jobe Bellingham
+  number: 7
+  display: Bellingham
+
+f-nmecha:
+  name: Felix Nmecha
+  number: 8
+  display: Nmecha
+
+s-guirassy:
+  name: Serhou Guirassy
+  number: 9
+  display: Guirassy
+
+m-beier:
+  name: Maximilian Beier
+  number: 14
+  display: Beier
+
+e-nwaneri:
+  name: Ethan Nwaneri
+  number: 18
+  display: Nwaneri
+
+m-sabitzer:
+  name: Marcel Sabitzer
+  number: 20
+  display: Sabitzer
+
+j-gadou:
+  name: Joane Gadou
+  number: 22
+  display: Gadou
+
+d-svensson:
+  name: Daniel Svensson
+  number: 24
+  display: Svensson
