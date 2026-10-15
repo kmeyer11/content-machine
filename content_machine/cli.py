@@ -218,14 +218,14 @@ def _set_background(path: Path) -> Optional[str]:
 
 def cmd_background(args) -> None:
     for p in args.posts:
-        path = Path(p).resolve()
+        path = Path(p).absolute()
         bg = _set_background(path)
         if not _is_draw(load_yaml(path)):
             print(bg or "null (no photo found, the template uses the yellow halftone)")
 
 
 def cmd_render(args) -> None:
-    render([Path(p).resolve() for p in args.posts])
+    render([Path(p).absolute() for p in args.posts])
 
 
 def cmd_crest(args) -> None:
